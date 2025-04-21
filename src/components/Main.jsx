@@ -9,43 +9,27 @@ const Main = () => {
   const [showForm, setShowForm] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-
-  // Variables that are used in creating a task 
+  // Variables that are used in creating a task
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
   // const [strtDate, setStrtDate] = useState("");
   // const [endDate, setEndDate] = useState("");
-
-
-  // When the task Completed
-  const taskCompletition = () => {
-    const checkbox = document.querySelector(".complete");
-    const status = document.querySelector(".taskStatus");
-    if (checkbox.checked === true) {
-      status.innerHTML = "Completed ...";
-      status.style.color = "#4CAF50";
-      checkbox.disabled = true;
-    }
-  };
-
 
   // Showing Form For adding task
   const handleAddTask = () => {
     setShowForm(true);
   };
 
-
   // Cancelling Form
   const handleCancelTask = () => {
     setShowForm(false);
   };
 
-
   // Form Sumbit Handler ...
   const submitHandler = (e) => {
-    e.preventDefault();   // Preventing page refresh after form submitting
+    e.preventDefault(); // Preventing page refresh after form submitting
 
-    setTask([...task, { taskName, taskDesc }]);
+    setTask([...task, { taskName, taskDesc, completed: false }]);
 
     setShowForm(false);
     setShowSuccess(true);
@@ -58,13 +42,20 @@ const Main = () => {
     setTimeout(() => setShowSuccess(false), 2000);
   };
 
-
   // For Deleting Task ....
   const taskDeletition = (i) => {
-    let taskContainer = [...task];
+    const taskContainer = [...task];
     taskContainer.splice(i, 1);
 
     setTask(taskContainer);
+  };
+
+  // When the task Completed
+  const taskCompletition = (index) => {
+    const completedTask = [...task];
+    completedTask[index].completed = !completedTask[index].completed;
+    setTask(completedTask);
+
   };
 
 
@@ -92,15 +83,27 @@ const Main = () => {
                 type="checkbox"
                 name="complete"
                 className="complete cursor-pointer h-5 w-5"
-                onClick={taskCompletition}
+                checked={t.completed}
+                disabled={t.completed}
+                onChange={() => {
+                  taskCompletition(i);
+                  // disabled={t.completed};
+                }}
               />
-              <button onClick={taskDeletition}>
-                <FontAwesomeIcon icon={faTrash} className="text-red-800 h-6 w-6" />
+              <button onClick={()=>{
+                taskDeletition(i);
+              }}>
+                <FontAwesomeIcon
+                  icon={faTrash}
+                  className="text-red-800 h-6 w-6"
+                />
               </button>
             </div>
 
             <div className="absolute right-4 bottom-1">
-              <p className="taskStatus text-blue-500 text-[0.9rem] text-end tracking-widest">Pending ...</p>
+              <p className={`text-[0.8rem] text-end ${t.completed ? "text-green-500" : "text-blue-500"} tracking-widest`}>
+                {t.completed ? "Completed ..." : "Pending ..."}
+              </p>
             </div>
           </div>
         </li>
@@ -108,23 +111,37 @@ const Main = () => {
     });
   }
 
-// ------------------------------------------------------------------------------------------------------------------------
-
   return (
     <>
       {/*Tasks Container...  */}
-      <div className="h-[85vh] w-[80vmax] text-[rgb(97,97,97)] bg-[#0f1313] rounded-lg relative">
-        <div className="h-full w-full flex flex-col justify-evenly px-[3vmin]">
-          <h3 className="text-[1.5rem] text-[#87ace4] font-mono ">Pending Tasks</h3>
+      <div className="text-[rgb(97,97,97)] bg-[#0f1313] rounded-lg relative flex flex-col gap-5">
+        <div className="h-[90vh] w-[80vmax] flex flex-col justify-evenly py-[4vmin]  px-[3vmin] ">
+          <h3 className="text-[1.5rem] text-blue-300 font-mono ">
+            Pending Tasks
+          </h3>
 
-          <hr className="mb-5" />
+          <hr className="mb-10" />
 
           <ul className="taskContainer h-[68vh] w-full overflow-y-auto flex flex-wrap justify-evenly gap-[0.5rem]">
             {renderItem}
           </ul>
         </div>
-      </div>
 
+        <span className="bg-zinc-700 h-[1px] w-full"></span>
+
+        {/* <div className="h-[80vh] w-[80vmax] flex flex-col justify-evenly px-[3vmin]">
+          <h3 className="text-[1.5rem] text-green-300 font-mono ">
+            Completed Tasks
+          </h3>
+
+          <hr className="mb-10" />
+
+          <ul className="taskContainer h-[68vh] w-full overflow-y-auto flex flex-wrap justify-evenly gap-[0.5rem]">
+            {renderItem}
+          </ul>
+        </div> */}
+
+      </div>
 
       {/* Button for Adding a new TASK ... */}
       <button
@@ -133,7 +150,6 @@ const Main = () => {
       >
         <FontAwesomeIcon icon={faPlus} />
       </button>
-
 
       {/* Show Form for Adding Tasks ...  */}
       {showForm && (
@@ -240,7 +256,6 @@ const Main = () => {
           </form>
         </div>
       )}
-
 
       {/* Show Success after Adding Tasks ...  */}
       {showSuccess && (
