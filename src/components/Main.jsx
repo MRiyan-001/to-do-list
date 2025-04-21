@@ -19,7 +19,7 @@ const Main = () => {
 
   // When the task Completed
   const taskCompletition = () => {
-    const checkbox = document.getElementById("complete");
+    const checkbox = document.querySelector(".complete");
     const status = document.querySelector(".taskStatus");
     if (checkbox.checked === true) {
       status.innerHTML = "Completed ...";
@@ -91,8 +91,7 @@ const Main = () => {
               <input
                 type="checkbox"
                 name="complete"
-                id="complete"
-                className="cursor-pointer h-5 w-5"
+                className="complete cursor-pointer h-5 w-5"
                 onClick={taskCompletition}
               />
               <button onClick={taskDeletition}>
