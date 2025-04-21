@@ -62,7 +62,7 @@ const Main = () => {
 
   // For rendering "Empty"
   let renderItem = (
-    <h2 className="absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] text-2xl font-mono font-bold">
+    <h2 className="absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%] text-[1.4rem] font-mono font-bold">
       Empty ... !
     </h2>
   );
@@ -71,7 +71,7 @@ const Main = () => {
   if (task.length > 0) {
     renderItem = task.map((t, i) => {
       return (
-        <li key={i} className="task h-20 w-[25vmax] relative mb-2">
+        <li key={i} className="task h-20 w-[25vmax] relative mb-5">
           <div className="w-[70%] flex flex-col">
             <h2 className="text-white text-lg">{t.taskName}</h2>
             <p className="text-zinc-500 text-sm/4">{t.taskDesc}</p>
@@ -114,21 +114,23 @@ const Main = () => {
   return (
     <>
       {/*Tasks Container...  */}
-      <div className="text-[rgb(97,97,97)] bg-[#0f1313] rounded-lg relative flex flex-col gap-5">
-        <div className="h-[90vh] w-[80vmax] flex flex-col justify-evenly py-[4vmin]  px-[3vmin] ">
+      <div className="task-container h-auto w-[80vmax] text-[rgb(97,97,97)] bg-[#0f1313] rounded-lg relative">
+        <div className=" w-full flex flex-col justify-evenly py-[4vmin] px-[3vmin] overflow-y-auto">
           <h3 className="text-[1.5rem] text-blue-300 font-mono ">
             Pending Tasks
           </h3>
 
           <hr className="mb-10" />
 
-          <ul className="taskContainer h-[68vh] w-full overflow-y-auto flex flex-wrap justify-evenly gap-[0.5rem]">
+         
+
+          <ul className="w-full flex flex-wrap">
             {renderItem}
           </ul>
+          
         </div>
 
-        <span className="bg-zinc-700 h-[1px] w-full"></span>
-
+        {/* <span className="bg-zinc-700 h-[1px] w-full"></span> */}
         {/* <div className="h-[80vh] w-[80vmax] flex flex-col justify-evenly px-[3vmin]">
           <h3 className="text-[1.5rem] text-green-300 font-mono ">
             Completed Tasks
@@ -140,12 +142,11 @@ const Main = () => {
             {renderItem}
           </ul>
         </div> */}
-
       </div>
 
       {/* Button for Adding a new TASK ... */}
       <button
-        className="h-[5vmax] w-[5vmax] flex items-center justify-center rounded-full text-white text-[2vmax] font-semibold bg-blue-600 fixed bottom-5 right-5 hover:scale-75"
+        className="h-[3rem] w-[3rem] flex items-center justify-center rounded-full text-white text-[2vmax] font-semibold bg-blue-600 fixed bottom-5 right-5 hover:scale-75"
         onClick={handleAddTask}
       >
         <FontAwesomeIcon icon={faPlus} />

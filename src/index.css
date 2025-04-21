@@ -22,12 +22,20 @@ li{
   justify-content: space-between;
   border: 1px solid rgb(136, 127, 127);
   border-left: 3px solid white;
+  border-right: 3px solid white;
   border-radius: 5px;
   padding: 5px 10px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+.task-container{
+  min-height: 90vh;
+}
 .taskContainer::-webkit-scrollbar {
   width: 2px;
+  position: absolute;
+  left: 0;
 }
 .taskContainer::-webkit-scrollbar-thumb {
   background-color: #809393;
