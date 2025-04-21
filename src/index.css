@@ -15,12 +15,6 @@ html, body{
 }
 
 
-.blur-background {
-  filter: blur(4px);
-  transition: filter 0.3s ease;
-  pointer-events: none; /* Prevent interaction while blurred (optional) */
-}
-
 li{
   height: auto;
   display: flex;
@@ -32,19 +26,12 @@ li{
   padding: 5px 10px;
 }
 
-/* .taskContainer{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
-} */
-
 .taskContainer::-webkit-scrollbar {
   width: 2px;
 }
 .taskContainer::-webkit-scrollbar-thumb {
   background-color: #809393;
 }
-
 
 
 .success-popup {
